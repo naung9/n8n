@@ -121,6 +121,11 @@ export interface IExternalHooks {
 	run(eventName: string, metadata?: IDataObject): Promise<void>;
 }
 
+export interface IRudderAnalyticsConfig {
+	url: string;
+	key: string;
+}
+
 export interface IRestApi {
 	getActiveWorkflows(): Promise<string[]>;
 	getActivationError(id: string): Promise<IActivationError | undefined >;
@@ -471,6 +476,7 @@ export interface IN8nUISettings {
 	};
 	versionNotifications: IVersionNotificationSettings;
 	instanceId: string;
+	analytics: IDataObject;
 }
 
 export interface IWorkflowSettings extends IWorkflowSettingsWorkflow {
@@ -615,6 +621,7 @@ export interface IRootState {
 	workflow: IWorkflowDb;
 	sidebarMenuItems: IMenuItem[];
 	instanceId: string;
+	analytics: IDataObject;
 }
 
 export interface ITagsState {
