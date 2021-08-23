@@ -226,6 +226,7 @@ export default mixins(
 		dialogVisible (newValue, oldValue) {
 			if (newValue) {
 				this.openDialog();
+				this.$analytics.track('User opened workflow settings', { workflow_id: this.$store.getters.workflowId });
 			}
 			this.$externalHooks().run('workflowSettings.dialogVisibleChanged', { dialogVisible: newValue });
 		},
