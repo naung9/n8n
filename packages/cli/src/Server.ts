@@ -120,7 +120,7 @@ import * as TagHelpers from './TagHelpers';
 import { TagEntity } from './databases/entities/TagEntity';
 import { WorkflowEntity } from './databases/entities/WorkflowEntity';
 import { WorkflowNameRequest } from './WorkflowHelpers';
-import { Telemetry } from './Telemetry';
+import { Analytics } from './Analytics';
 
 class App {
 
@@ -149,9 +149,9 @@ class App {
 	payloadSizeMax: number;
 
 	presetCredentialsLoaded: boolean;
-	telemetry: Telemetry;
+	analytics: Analytics;
 
-	constructor(telemetry: Telemetry) {
+	constructor(analytics: Analytics) {
 		this.app = express();
 
 		this.endpointWebhook = config.get('endpoints.webhook') as string;
@@ -179,19 +179,19 @@ class App {
 		this.sslCert = config.get('ssl_cert');
 
 		this.externalHooks = ExternalHooks();
-		this.telemetry = telemetry;
+		this.analytics = analytics;
 
 		this.presetCredentialsLoaded = false;
 		this.endpointPresetCredentials = config.get('credentials.overwrite.endpoint') as string;
 
 		const urlBaseWebhook = WebhookHelpers.getWebhookBaseUrl();
 
-		let telemetrySettings: IAnalyticsSettings = {
-			enabled: config.get('telemetry.enabled') as boolean,
+		let analyticsSettings: IAnalyticsSettings = {
+			enabled: config.get('analytics.enabled') as boolean,
 		};
 
-		if(telemetrySettings.enabled) {
-			telemetrySettings.config = config.get(`telemetry.config`) as IRudderAnalyticsConfig;
+		if(analyticsSettings.enabled) {
+			analyticsSettings.config = config.get(`analytics.config`) as IRudderAnalyticsConfig;
 		}
 
 		this.frontendSettings = {
@@ -215,7 +215,7 @@ class App {
 				infoUrl: config.get('versionNotifications.infoUrl'),
 			},
 			instanceId: '',
-			analytics: telemetrySettings,
+			analytics: analyticsSettings,
 		};
 	}
 
@@ -2173,11 +2173,11 @@ class App {
 
 }
 
-export async function start(telemetry: Telemetry): Promise<void> {
+export async function start(analytics: Analytics): Promise<void> {
 	const PORT = config.get('port');
 	const ADDRESS = config.get('listen_address');
 
-	const app = new App(telemetry);
+	const app = new App(analytics);
 
 	await app.config();
 

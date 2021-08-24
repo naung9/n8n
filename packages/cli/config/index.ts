@@ -639,25 +639,25 @@ const config = convict({
 		},
 	},
 
-	telemetry: {
+	analytics: {
 		enabled: {
-			doc: 'Whether feature is enabled to send telemetry data.',
+			doc: 'Whether feature is enabled to send analytics data.',
 			format: Boolean,
 			default: true,
-			env: 'N8N_TELEMETRY_ENABLED',
+			env: 'N8N_ANALYTICS_ENABLED',
 		},
 		config: {
 			key: {
 				doc: 'Rudder key.',
 				format: String,
 				default: '1wfxw1YdRGrntY8intaq53hui51',
-				env: 'N8N_TELEMETRY_RUDDER_KEY',
+				env: 'N8N_ANALYTICS_RUDDER_KEY',
 			},
 			url: {
 				doc: 'Rudder data plane URL.',
 				format: String,
 				default: 'http://localhost:8878',
-				env: 'N8N_TELEMETRY_RUDDER_DATA_PLANE_URL',
+				env: 'N8N_ANALYTICS_RUDDER_DATA_PLANE_URL',
 			},
 		}
 	},
