@@ -646,13 +646,7 @@ const config = convict({
 			default: true,
 			env: 'N8N_TELEMETRY_ENABLED',
 		},
-		type: {
-			doc: 'Telemetry type.',
-			format: String,
-			default: 'rudder',
-			env: 'N8N_TELEMETRY_TYPE',
-		},
-		rudder: {
+		config: {
 			key: {
 				doc: 'Rudder key.',
 				format: String,

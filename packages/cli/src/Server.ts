@@ -79,6 +79,7 @@ import {
 } from 'n8n-core';
 
 import {
+	IAnalyticsSettings,
 	ICredentialsEncrypted,
 	ICredentialType,
 	IDataObject,
@@ -86,6 +87,7 @@ import {
 	INodeParameters,
 	INodePropertyOptions,
 	INodeTypeDescription,
+	IRudderAnalyticsConfig,
 	IRunData,
 	IWorkflowBase,
 	IWorkflowCredentials,
@@ -184,18 +186,12 @@ class App {
 
 		const urlBaseWebhook = WebhookHelpers.getWebhookBaseUrl();
 
-		let telemetrySettings: IDataObject = {};
+		let telemetrySettings: IAnalyticsSettings = {
+			enabled: config.get('telemetry.enabled') as boolean,
+		};
 
-		if(config.get('telemetry.enabled') as boolean) {
-			telemetrySettings.enabled = true;
-			telemetrySettings.type = config.get('telemetry.type') as string;
-			if(telemetrySettings.type) {
-				telemetrySettings.config = config.get(`telemetry.${telemetrySettings.type}`) as object;
-			}
-		}
-
-		if(!telemetrySettings.type) {
-			telemetrySettings = {};
+		if(telemetrySettings.enabled) {
+			telemetrySettings.config = config.get(`telemetry.config`) as IRudderAnalyticsConfig;
 		}
 
 		this.frontendSettings = {

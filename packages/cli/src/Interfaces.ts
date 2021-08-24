@@ -1,4 +1,5 @@
 import {
+	IAnalyticsSettings,
 	ExecutionError,
 	ICredentialDataDecryptedObject,
 	ICredentialsDecrypted,
@@ -338,7 +339,7 @@ export interface IN8nUISettings {
 	};
 	versionNotifications: IVersionNotificationSettings;
 	instanceId: string;
-	analytics: IDataObject;
+	analytics: IAnalyticsSettings;
 }
 
 export interface IPackageVersions {

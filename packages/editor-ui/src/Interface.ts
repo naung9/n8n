@@ -121,11 +121,6 @@ export interface IExternalHooks {
 	run(eventName: string, metadata?: IDataObject): Promise<void>;
 }
 
-export interface IRudderAnalyticsConfig {
-	url: string;
-	key: string;
-}
-
 export interface IRestApi {
 	getActiveWorkflows(): Promise<string[]>;
 	getActivationError(id: string): Promise<IActivationError | undefined >;

@@ -793,3 +793,13 @@ export type CodexData = {
 export type JsonValue = string | number | boolean | null | JsonObject | JsonValue[];
 
 export type JsonObject = { [key: string]: JsonValue };
+
+export interface IRudderAnalyticsConfig {
+	url: string;
+	key: string;
+}
+
+export interface IAnalyticsSettings {
+	enabled: boolean;
+	config?: IRudderAnalyticsConfig;
+}

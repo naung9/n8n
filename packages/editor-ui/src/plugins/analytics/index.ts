@@ -1,7 +1,10 @@
 import _Vue from "vue";
-import { IDataObject } from 'n8n-workflow';
-import * as rudderAnalytics from './rudderanalytics';
-import { IRudderAnalyticsConfig } from "@/Interface";
+import {
+	IAnalyticsSettings,
+	IDataObject,
+} from 'n8n-workflow';
+
+import * as rudderanalytics from 'rudder-sdk-js';
 
 declare module 'vue/types/vue' {
 	interface Vue {
@@ -9,7 +12,7 @@ declare module 'vue/types/vue' {
 	}
 }
 
-export function AnalyticsPlugin(vue: typeof _Vue, options: IDataObject): void {
+export function AnalyticsPlugin(vue: typeof _Vue, options: IAnalyticsSettings): void {
 	const analytics = new Analytics(options);
 	Object.defineProperty(vue, '$analytics', {
 		get() { return analytics; },
@@ -23,9 +26,14 @@ class Analytics {
 
 	private analytics?: any; // tslint:disable-line:no-any
 
-	constructor(options: IDataObject) {
-		if(options.enabled) {
-			this.analytics = rudderAnalytics.init(options.config! as IRudderAnalyticsConfig);
+	constructor(options: IAnalyticsSettings) {
+		if (options.enabled) {
+			if(!options.config) {
+				return;
+			}
+			
+			rudderanalytics.load(options.config.key, options.config.url, { logLevel: 'DEBUG' });
+			this.analytics = rudderanalytics;
 		}
 	}
 
